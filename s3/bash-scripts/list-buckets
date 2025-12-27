@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+echo "==list-buckets=="
+
+# aws s3 ls
+
+# aws s3api list-buckets \
+# --query 'Buckets[].Name' \
+# --output text
+
+# Using jq to format the output to get the top 5 latest bucket
+# aws s3api list-buckets | jq -r '.Buckets | sort_by(.CreationDate) | reverse | .[0:5].Name'
+
+aws s3 ls | awk '{print $3}'

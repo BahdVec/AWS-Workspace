@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+echo "==create-files=="
+
+#check if bucket name is provided
+if [ -z "$1" ]; then
+    echo "There need to be a bucket name provided as the first argument. e.g., ./
+    create-bucket my-bucket-name us-west-2"
+    exit 1
+fi
+
+BUCKET="$1"
+DIR="tmp-files"
+
+# Create directory if it doesn't exist
+mkdir -p "$DIR"
+
+for i in {1..5}; do
+    FILE="$DIR/file_$i.txt"
+    LOCAL_PATH="$DIR/$FILE"
+
+    echo "Hello from file $i" > "$LOCAL_PATH"
+
+    aws s3api put-object \
+    --bucket "$BUCKET" \
+    --key "$FILE" \
+    --body "$LOCAL_PATH"
+done
+
+echo "5 files uploaded to bucket $1 successfully."

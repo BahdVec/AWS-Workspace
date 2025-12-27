@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 echo "==latest-bucket=="
 
+# Using jq to get the latest created bucket
 aws s3api list-buckets | jq -r '.Buckets | sort_by(.CreationDate) | reverse | .[0].Name'

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+echo "==delete-objects=="
+
+set -e
+
+BUCKET="$1"
+
+if [ -z "$BUCKET" ]; then
+  echo "Usage: $0 <bucket-name>"
+  exit 1
+fi
+
+OBJECTS=$(aws s3api list-objects-v2 \
+  --bucket "$BUCKET" \
+  --query 'Contents[].Key' \
+  --output json \
+  | jq -c 'map({Key: .})')
+
+# Exit if bucket is empty
+if [ "$OBJECTS" = "[]" ]; then
+  echo "Bucket is empty. Nothing to delete."
+  exit 0
+fi
+
+aws s3api delete-objects \
+  --bucket "$BUCKET" \
+  --delete "{\"Objects\": $OBJECTS}"

@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-echo "==create-files=="
+echo "==put-objects=="
 
 #check if bucket name is provided
 if [ -z "$1" ]; then
-    echo "There need to be a bucket name provided as the first argument. e.g., ./
-    create-bucket my-bucket-name us-west-2"
+    echo "There need to be a bucket name provided as the first argument."
     exit 1
 fi
 
@@ -15,7 +14,7 @@ DIR="tmp-files"
 mkdir -p "$DIR"
 
 for i in {1..5}; do
-    FILE="$DIR/file_$i.txt"
+    FILE="file_$i.txt"
     LOCAL_PATH="$DIR/$FILE"
 
     echo "Hello from file $i" > "$LOCAL_PATH"

@@ -9,6 +9,6 @@ fi
 
 aws s3api delete-bucket \
 --bucket "$1" \
---output text \
+# --output text \
 
 echo "Bucket $1 deleted successfully."

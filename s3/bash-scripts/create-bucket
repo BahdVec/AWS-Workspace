@@ -8,10 +8,15 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-aws s3api create-bucket \
---bucket "$1" \
---create-bucket-configuration LocationConstraint="$2" \
---query 'Location' \
---output text \
+if [ "$REGION" = "us-east-1" ]; then
+    aws s3api create-bucket \
+        --bucket "$BUCKET" \
+        --region us-east-1
+else
+    aws s3api create-bucket \
+        --bucket "$BUCKET" \
+        --region "$REGION" \
+        --create-bucket-configuration LocationConstraint="$REGION"
+fi
 
-echo "Bucket $1 created successfully."
+echo "Bucket $BUCKET created successfully in $REGION."

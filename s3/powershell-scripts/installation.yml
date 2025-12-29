@@ -1,0 +1,11 @@
+# https://docs.aws.amazon.com/powershell/v5/userguide/ps-installing-awstools.html
+
+Windows PowerShell is currently configured to block all script-based modules, which prevents AWS.Tools.Installer (and its dependency PackageManagement) from loading.
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+Restart PowerShell
+Import-Module AWS.Tools.Installer
+
+Currently working with S3
+Install-AWSToolsModule AWS.Tools.S3 -CleanUp -Scope CurrentUser
+Get-Module -ListAvailable AWS.Tools.S3
